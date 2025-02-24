@@ -17,6 +17,11 @@ def convert_alto(files):
     paragraphs = []
     in_sync = True
     for file_ in files:
+        """
+        NB. There was a graphic type element in the alto xml that was causing the alto package to throw errors.
+        I went into the soutce code of the package and changed the line with raise Error...
+        to warnings.warn...
+        """
         altofile = alto.parse_file(file_)
         paragraphs += _alto_extract_paragraphs(altofile)
     return paragraphs
