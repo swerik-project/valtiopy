@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "valtiopy"
+version = "v0.0.1"
+description = "Work with the Valtiopaivat Corpus."
+authors = ["bobborges"]
+repository = "https://github.com/swerik-project/valtiopy"
+readme = "README.md"
+license = "MIT"
+packages = [
+    { include = "valtiopy", from = "" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+pandas = "*"
+base58 = "*"
+lxml = "*"
+xmlschema = "*"
+beautifulsoup4 = "*"
+requests = "*"
+numpy = "*"
+SPARQLWrapper = "*"
+tqdm = "*"
+matplotlib = "*"
+importlib_resources = "*"
+nltk = "*"
+textdistance = "*"
+py-markdown-table = "*"
+alto-xml = "*"
+trainerlog = "*"
+transformers = "*"
+pyriksdagen = "*"
+
+[tool.poetry.dev-dependencies]
+devtools = "^0.5.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
