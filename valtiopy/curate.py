@@ -1,3 +1,6 @@
+"""
+Functions for curating the Valtiopaivat Corpus from scanned, OCRed image files
+"""
 from lxml import etree
 from pyparlaclarin.create import pc_header
 from pyriksdagen.download import _alto_extract_paragraphs
@@ -13,17 +16,33 @@ import copy
 import os
 
 
+
+
 def convert_alto(files):
-    paragraphs = []
+    """
+    Convert a list of alto files to a dict
+    {page_index: [paragraph, paragraph, paragraph...]
+
+    NB. There was a graphic type element in the alto xml that was causing the alto package to throw errors.
+    I went into the soutce code of the package and changed the line with raise Error...
+    to warnings.warn...
+
+    Args
+
+        files: (list) collection of alto file paths
+    """
+    paragraphs = {}
     in_sync = True
     for file_ in files:
-        """
-        NB. There was a graphic type element in the alto xml that was causing the alto package to throw errors.
-        I went into the soutce code of the package and changed the line with raise Error...
-        to warnings.warn...
-        """
-        altofile = alto.parse_file(file_)
-        paragraphs += _alto_extract_paragraphs(altofile)
+
+        nr = file_.split('-')[-1].replace('.xml', '')
+        try:
+            altofile = alto.parse_file(file_)
+        except:
+            print("OOOPS", file_)
+            raise Error("sth isn't right")
+        pp = _alto_extract_paragraphs(altofile)
+        paragraphs[nr] = pp
     return paragraphs
 
 
@@ -39,7 +58,15 @@ def dict_to_tei(data, verbose=False):
     """
     if verbose: ptint(f"INFO: Preparing tei")
     metadata = copy.deepcopy(data)
-
+    dt = {
+        "prot": "records",
+        "ptk": "records",
+        "hand": "handlingar",
+        "ask": "handlingar",
+        "bil": "handlingar",
+        "reg": "register",
+        "sis": "register"
+    }
     nsmap = {None: TEI_NS}
     nsmap = {key: value.replace("{", "").replace("}", "") for key,value in nsmap.items()}
     tei = etree.Element("TEI", nsmap=nsmap)
@@ -68,19 +95,17 @@ def dict_to_tei(data, verbose=False):
     protocol_id = metadata["filename"]
     element_seed = f"{protocol_id}\nNA\n"
     print(element_seed)
-    for paragraph in data["paragraphs"]:
-        if type(paragraph) == int:
-            element_seed = f"{protocol_id}\n{paragraph}\n"
-            pb = etree.SubElement(body_div, "pb")
-            sitting, number = metadata["sitting"], metadata["number"]
-            #paragraph = f"{paragraph:03d}"
-            #link = f"https://betalab.kb.se/prot-{sitting}--{number}/prot_{sitting}__{number}-{paragraph}.jp2/_view"
-            #pb.attrib["facs"] = link
-        else:
-            note = etree.SubElement(body_div, "note")
-            note.text = paragraph
+    for nr, pp in data["paragraphs"].items():
+        pb = etree.SubElement(body_div, "pb")
+        pb.attrib["facs"] = f"https://swerik-project.github.io/valtiopaivat-{dt[metadata['document_type']]}-pdf/{metadata['yearstr']}/{metadata['filename']}-{nr}.pdf"
+        for paragraph in pp:
+            if metadata["document_type"] in ["ptk", "prot"]:
+                elem = etree.SubElement(body_div, "note")
+            else:
+                elem = etree.SubElement(body_div, "p")
+            elem.text = paragraph
             element_seed += paragraph
-            note.attrib[f"{XML_NS}id"] = get_formatted_uuid(element_seed)
+            elem.attrib[f"{XML_NS}id"] = get_formatted_uuid(element_seed)
 
     return tei
 

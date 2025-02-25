@@ -10,13 +10,30 @@ import argparse
 import warnings
 
 
-class NotImplemented(Warning):
 
+
+class NotImplemented(Warning):
+    """
+    Warn on unimplemented functions
+    """
     def __init__(self, func):
         self.message = f"\n    --~~--~~>    The function {func} is not implemented yet."
 
     def __str__(self):
         return self.message
+
+
+def custom_serializer(obj):
+    """
+    This takes an argparse args class and either serializes it to txt,
+    or replaces a non-serializable object with its name.
+
+    used for debugging the argparse args
+    """
+    try:
+        return json.JSONEncoder().default(obj)
+    except TypeError:
+        return f"Non-serializable: {type(obj).__name__}"
 
 
 def populate_common_args(parser):
@@ -51,7 +68,7 @@ def populate_common_args(parser):
                         nargs = "+",
                         help = "Parse documents from chambers.")
     parser.add_argument("-d", "--doctypes",
-                        choices = ["ask", "hand", "prot", "ptk", "reg"],
+                        choices = ["ask", "hand", "prot", "ptk", "bil", "reg", "sis"],
                         nargs = "+",
                         help = "Document types to process")
     parser.add_argument("-f", "--docformats",
@@ -103,7 +120,7 @@ def impute_arg_values(args):
             for path_ in paths:
                 if args.verbose: print(f"INFO: looking for files at {path_}")
                 if args.meeting is not None:
-                    if args.verbose: print("INFO: riksmöte meeting specified")
+                    if args.verbose: print(f"INFO: riksmöte meeting specified {args.meeting}")
                     fs = sorted(glob(f"{path_}/data/{args.meeting}/**/*{ext}", recursive=True))
                     files.extend(fs)
                     if args.verbose: print(f"INFO:   found {len(fs)} files")

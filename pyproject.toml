@@ -12,23 +12,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pandas = "*"
-base58 = "*"
-lxml = "*"
-xmlschema = "*"
-beautifulsoup4 = "*"
-requests = "*"
-numpy = "*"
-SPARQLWrapper = "*"
-tqdm = "*"
-matplotlib = "*"
-importlib_resources = "*"
-nltk = "*"
-textdistance = "*"
-py-markdown-table = "*"
-alto-xml = "*"
-trainerlog = "*"
-transformers = "*"
 pyriksdagen = "*"
 
 [tool.poetry.dev-dependencies]
