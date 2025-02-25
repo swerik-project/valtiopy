@@ -1,3 +1,6 @@
+"""
+Utilities for the Valtiopaivat Corpus
+"""
 from pyriksdagen.utils import (
     get_formatted_uuid,
     parse_tei,
@@ -6,8 +9,6 @@ from pyriksdagen.utils import (
 import json
 
 
-XML_NS = "{http://www.w3.org/XML/1998/namespace}"
-TEI_NS = "{http://www.tei-c.org/ns/1.0}"
 
 
 def infer_metadata(filename, verbose=False):
@@ -37,3 +38,7 @@ def infer_metadata(filename, verbose=False):
     metadata["number"] = num
     if verbose: print("INFO:\n", json.dumps(metadata, indent=2))
     return metadata
+
+
+XML_NS = "{http://www.w3.org/XML/1998/namespace}"
+TEI_NS = "{http://www.tei-c.org/ns/1.0}"

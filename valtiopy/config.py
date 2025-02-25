@@ -12,7 +12,6 @@ class ValtiopaivatCorpusConfig:
     """
     Config options for the Valtiopaivat Corpus.
     """
-
     def __init__(self, **kwargs):
         self.ConfigName = None
         self.ConfigPath = None
