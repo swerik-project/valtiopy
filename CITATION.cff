@@ -14,4 +14,4 @@ identifiers:
     value: valtiopy
 repository-code: "https://github.com/swerik-project/valtiopy"
 url: "https://github.com/swerik-project/the-swedish-parliament-corpus"
-type: Python Module
+type: software
