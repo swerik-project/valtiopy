@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "valtiopy"
-version = "v0.0.0"
+version = "v0.0.1"
 description = "Work with the Valtiopaivat Corpus."
 authors = ["bobborges"]
 repository = "https://github.com/swerik-project/valtiopy"
