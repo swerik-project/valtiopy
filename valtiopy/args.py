@@ -39,6 +39,14 @@ def custom_serializer(obj):
 def populate_common_args(parser):
     """
     Add common arguments to a parser that will be used in most of the scripts.
+
+    Args
+
+        parser: argparse parser instance
+
+    Returns
+
+        parser
     """
     parser.add_argument("-c", "--config-name",
                         default = 'default',
@@ -85,6 +93,14 @@ def populate_common_args(parser):
 def fetch_parser(description=None):
     """
     Create a parser instance and populate it with common arguments.
+
+    Args
+
+        description (str): description of script calling parser (__doc__)
+
+    Returns
+
+        parser
     """
     parser = argparse.ArgumentParser(description=description)
     parser = populate_common_args(parser)
@@ -94,6 +110,14 @@ def fetch_parser(description=None):
 def impute_arg_values(args):
     """
     parse common arguments and pre-handle args for the script user
+
+    Args
+
+        args: Argparse argument class instances
+
+    Returns
+
+        args
     """
     def _handle_config(args):
         """
@@ -114,6 +138,14 @@ def impute_arg_values(args):
     def _fetch_documents(args):
         """
         fetch documents according to start/end or meeting time frame
+
+        Args
+
+            args: Argparse argument class instances
+
+        Returns
+
+            args
         """
         def _get_files(paths, args, ext=".xml"):
             files = []
@@ -156,6 +188,14 @@ def impute_arg_values(args):
     def _filter_doctype(args):
         """
         select documents based on doctype
+
+        Args
+
+            args: Argparse argument class instances
+
+        Returns
+
+            args
         """
         if args.doctypes is None:
             return args
@@ -172,6 +212,14 @@ def impute_arg_values(args):
     def _filter_language(args):
         """
         select documents based on the primary language
+
+        Args
+
+            args: Argparse argument class instances
+
+        Returns
+
+            args
         """
         warnings.warn(_filter_language.__name__, NotImplemented)
         return args
@@ -179,6 +227,14 @@ def impute_arg_values(args):
     def _filter_chamber(args):
         """
         select documents based on the chamber
+
+        Args
+
+            args: Argparse argument class instances
+
+        Returns
+
+            args
         """
         if args.chambers is None:
             return args

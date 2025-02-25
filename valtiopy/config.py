@@ -44,7 +44,7 @@ class ValtiopaivatCorpusConfig:
 
         Args
 
-            **kwargs: key = val pairs to update
+            kwargs: key = val pairs to update
         """
         for k,v in kwargs.items():
             if hasattr(self, k):
@@ -64,6 +64,10 @@ def track_existing_config(name = None, location = None):
 
         name: a name for the config
         location: path and filename for the saved config
+
+    Return
+
+        bool (True == OK)
     """
     if name == None or location == None:
         raise Exception("You have to explicitly set the 'name' and 'location' of a new config.")
@@ -94,6 +98,10 @@ def create_new_config(name = None, location = None, **kwargs):
         name: a name for the config
         location: path and filename for the saved config
         **kwargs: key = val pairs to initialize with
+
+    Rrturn
+
+        config object
     """
     if track_existing_config(name=name, location=location):
         if kwargs is None:
@@ -114,6 +122,10 @@ def load_config(name = None, location = None):
 
         name: name of config
         location: path and file name of saved config.
+
+    Return
+
+        config
     """
     if name == None and location == name:
         raise Error("You need to pass either a name or location for the config file you want to load")

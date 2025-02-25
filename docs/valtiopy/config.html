@@ -91,7 +91,7 @@
     </ul>
 
 
-            <footer>v0.0.1</footer>
+            <footer>v0.0.2</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -158,7 +158,7 @@
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="sd">        Args</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">            **kwargs: key = val pairs to update</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">            kwargs: key = val pairs to update</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 </span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -178,75 +178,87 @@
 </span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>
 </span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="sd">        name: a name for the config</span>
 </span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="sd">        location: path and filename for the saved config</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">location</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You have to explicitly set the &#39;name&#39; and &#39;location&#39; of a new config.&quot;</span><span class="p">)</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>            <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_list_file</span><span class="p">)</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="n">cfg_list</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name -- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -- already exists as a named config.&quot;</span><span class="p">)</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">,</span> <span class="n">cfg_list_file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="k">return</span> <span class="kc">True</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="k">def</span><span class="w"> </span><span class="nf">create_new_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">    Create and save a new config object ans save it to a file.</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">    Return</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="sd">        bool (True == OK)</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">location</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You have to explicitly set the &#39;name&#39; and &#39;location&#39; of a new config.&quot;</span><span class="p">)</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>            <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_list_file</span><span class="p">)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="k">except</span><span class="p">:</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>        <span class="n">cfg_list</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name -- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -- already exists as a named config.&quot;</span><span class="p">)</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">,</span> <span class="n">cfg_list_file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="k">return</span> <span class="kc">True</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
 </span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">    Args</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">        name: a name for the config</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">        location: path and filename for the saved config</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="sd">        **kwargs: key = val pairs to initialize with</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="k">if</span> <span class="n">track_existing_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">):</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>            <span class="n">kwarks</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigName&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="k">return</span> <span class="n">cfg</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">    Load an existing config from file. If the config wis created with create_new_config, it can be loaded by name, otherwise, pass a file path.</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">    Args</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        name: name of config</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        location: path and file name of saved config.</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">location</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="k">raise</span> <span class="n">Error</span><span class="p">(</span><span class="s2">&quot;You need to pass either a name or location for the config file you want to load&quot;</span><span class="p">)</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="k">def</span><span class="w"> </span><span class="nf">create_new_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">    Create and save a new config object ans save it to a file.</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="sd">    Args</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">        name: a name for the config</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        location: path and filename for the saved config</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">        **kwargs: key = val pairs to initialize with</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">    Rrturn</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="sd">        config object</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="k">if</span> <span class="n">track_existing_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">):</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>            <span class="n">kwarks</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigName&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>    <span class="k">return</span> <span class="n">cfg</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">    Load an existing config from file. If the config wis created with create_new_config, it can be loaded by name, otherwise, pass a file path.</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inf</span><span class="p">:</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>                <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">inf</span><span class="p">)</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>                <span class="n">location</span> <span class="o">=</span> <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;oops...something went wrong&quot;</span><span class="p">)</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_file</span><span class="p">:</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">    Args</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        name: name of config</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">        location: path and file name of saved config.</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">    Return</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="sd">        config</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">location</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>        <span class="k">raise</span> <span class="n">Error</span><span class="p">(</span><span class="s2">&quot;You need to pass either a name or location for the config file you want to load&quot;</span><span class="p">)</span>
 </span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>    <span class="k">return</span> <span class="n">cfg</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inf</span><span class="p">:</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>                <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">inf</span><span class="p">)</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>                <span class="n">location</span> <span class="o">=</span> <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;oops...something went wrong&quot;</span><span class="p">)</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_file</span><span class="p">:</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>    <span class="k">return</span> <span class="n">cfg</span>
 </span></pre></div>
 
 
@@ -298,7 +310,7 @@
 </span><span id="ValtiopaivatCorpusConfig-45"><a href="#ValtiopaivatCorpusConfig-45"><span class="linenos">45</span></a>
 </span><span id="ValtiopaivatCorpusConfig-46"><a href="#ValtiopaivatCorpusConfig-46"><span class="linenos">46</span></a><span class="sd">        Args</span>
 </span><span id="ValtiopaivatCorpusConfig-47"><a href="#ValtiopaivatCorpusConfig-47"><span class="linenos">47</span></a>
-</span><span id="ValtiopaivatCorpusConfig-48"><a href="#ValtiopaivatCorpusConfig-48"><span class="linenos">48</span></a><span class="sd">            **kwargs: key = val pairs to update</span>
+</span><span id="ValtiopaivatCorpusConfig-48"><a href="#ValtiopaivatCorpusConfig-48"><span class="linenos">48</span></a><span class="sd">            kwargs: key = val pairs to update</span>
 </span><span id="ValtiopaivatCorpusConfig-49"><a href="#ValtiopaivatCorpusConfig-49"><span class="linenos">49</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="ValtiopaivatCorpusConfig-50"><a href="#ValtiopaivatCorpusConfig-50"><span class="linenos">50</span></a>        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 </span><span id="ValtiopaivatCorpusConfig-51"><a href="#ValtiopaivatCorpusConfig-51"><span class="linenos">51</span></a>            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -510,7 +522,7 @@
 </span><span id="ValtiopaivatCorpusConfig.update-45"><a href="#ValtiopaivatCorpusConfig.update-45"><span class="linenos">45</span></a>
 </span><span id="ValtiopaivatCorpusConfig.update-46"><a href="#ValtiopaivatCorpusConfig.update-46"><span class="linenos">46</span></a><span class="sd">        Args</span>
 </span><span id="ValtiopaivatCorpusConfig.update-47"><a href="#ValtiopaivatCorpusConfig.update-47"><span class="linenos">47</span></a>
-</span><span id="ValtiopaivatCorpusConfig.update-48"><a href="#ValtiopaivatCorpusConfig.update-48"><span class="linenos">48</span></a><span class="sd">            **kwargs: key = val pairs to update</span>
+</span><span id="ValtiopaivatCorpusConfig.update-48"><a href="#ValtiopaivatCorpusConfig.update-48"><span class="linenos">48</span></a><span class="sd">            kwargs: key = val pairs to update</span>
 </span><span id="ValtiopaivatCorpusConfig.update-49"><a href="#ValtiopaivatCorpusConfig.update-49"><span class="linenos">49</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="ValtiopaivatCorpusConfig.update-50"><a href="#ValtiopaivatCorpusConfig.update-50"><span class="linenos">50</span></a>        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 </span><span id="ValtiopaivatCorpusConfig.update-51"><a href="#ValtiopaivatCorpusConfig.update-51"><span class="linenos">51</span></a>            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -525,7 +537,7 @@
 
 <p>Args</p>
 
-<pre><code>**kwargs: key = val pairs to update
+<pre><code>kwargs: key = val pairs to update
 </code></pre>
 </div>
 
@@ -551,25 +563,29 @@
 </span><span id="track_existing_config-65"><a href="#track_existing_config-65"><span class="linenos">65</span></a>
 </span><span id="track_existing_config-66"><a href="#track_existing_config-66"><span class="linenos">66</span></a><span class="sd">        name: a name for the config</span>
 </span><span id="track_existing_config-67"><a href="#track_existing_config-67"><span class="linenos">67</span></a><span class="sd">        location: path and filename for the saved config</span>
-</span><span id="track_existing_config-68"><a href="#track_existing_config-68"><span class="linenos">68</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="track_existing_config-69"><a href="#track_existing_config-69"><span class="linenos">69</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">location</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="track_existing_config-70"><a href="#track_existing_config-70"><span class="linenos">70</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You have to explicitly set the &#39;name&#39; and &#39;location&#39; of a new config.&quot;</span><span class="p">)</span>
-</span><span id="track_existing_config-71"><a href="#track_existing_config-71"><span class="linenos">71</span></a>
-</span><span id="track_existing_config-72"><a href="#track_existing_config-72"><span class="linenos">72</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="track_existing_config-73"><a href="#track_existing_config-73"><span class="linenos">73</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
-</span><span id="track_existing_config-74"><a href="#track_existing_config-74"><span class="linenos">74</span></a>            <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_list_file</span><span class="p">)</span>
-</span><span id="track_existing_config-75"><a href="#track_existing_config-75"><span class="linenos">75</span></a>    <span class="k">except</span><span class="p">:</span>
-</span><span id="track_existing_config-76"><a href="#track_existing_config-76"><span class="linenos">76</span></a>        <span class="n">cfg_list</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="track_existing_config-77"><a href="#track_existing_config-77"><span class="linenos">77</span></a>
-</span><span id="track_existing_config-78"><a href="#track_existing_config-78"><span class="linenos">78</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
-</span><span id="track_existing_config-79"><a href="#track_existing_config-79"><span class="linenos">79</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name -- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -- already exists as a named config.&quot;</span><span class="p">)</span>
-</span><span id="track_existing_config-80"><a href="#track_existing_config-80"><span class="linenos">80</span></a>
-</span><span id="track_existing_config-81"><a href="#track_existing_config-81"><span class="linenos">81</span></a>    <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
-</span><span id="track_existing_config-82"><a href="#track_existing_config-82"><span class="linenos">82</span></a>
-</span><span id="track_existing_config-83"><a href="#track_existing_config-83"><span class="linenos">83</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
-</span><span id="track_existing_config-84"><a href="#track_existing_config-84"><span class="linenos">84</span></a>        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">,</span> <span class="n">cfg_list_file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="track_existing_config-85"><a href="#track_existing_config-85"><span class="linenos">85</span></a>
-</span><span id="track_existing_config-86"><a href="#track_existing_config-86"><span class="linenos">86</span></a>    <span class="k">return</span> <span class="kc">True</span>
+</span><span id="track_existing_config-68"><a href="#track_existing_config-68"><span class="linenos">68</span></a>
+</span><span id="track_existing_config-69"><a href="#track_existing_config-69"><span class="linenos">69</span></a><span class="sd">    Return</span>
+</span><span id="track_existing_config-70"><a href="#track_existing_config-70"><span class="linenos">70</span></a>
+</span><span id="track_existing_config-71"><a href="#track_existing_config-71"><span class="linenos">71</span></a><span class="sd">        bool (True == OK)</span>
+</span><span id="track_existing_config-72"><a href="#track_existing_config-72"><span class="linenos">72</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="track_existing_config-73"><a href="#track_existing_config-73"><span class="linenos">73</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">location</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="track_existing_config-74"><a href="#track_existing_config-74"><span class="linenos">74</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;You have to explicitly set the &#39;name&#39; and &#39;location&#39; of a new config.&quot;</span><span class="p">)</span>
+</span><span id="track_existing_config-75"><a href="#track_existing_config-75"><span class="linenos">75</span></a>
+</span><span id="track_existing_config-76"><a href="#track_existing_config-76"><span class="linenos">76</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="track_existing_config-77"><a href="#track_existing_config-77"><span class="linenos">77</span></a>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
+</span><span id="track_existing_config-78"><a href="#track_existing_config-78"><span class="linenos">78</span></a>            <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_list_file</span><span class="p">)</span>
+</span><span id="track_existing_config-79"><a href="#track_existing_config-79"><span class="linenos">79</span></a>    <span class="k">except</span><span class="p">:</span>
+</span><span id="track_existing_config-80"><a href="#track_existing_config-80"><span class="linenos">80</span></a>        <span class="n">cfg_list</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="track_existing_config-81"><a href="#track_existing_config-81"><span class="linenos">81</span></a>
+</span><span id="track_existing_config-82"><a href="#track_existing_config-82"><span class="linenos">82</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">cfg_list</span><span class="p">:</span>
+</span><span id="track_existing_config-83"><a href="#track_existing_config-83"><span class="linenos">83</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The name -- </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -- already exists as a named config.&quot;</span><span class="p">)</span>
+</span><span id="track_existing_config-84"><a href="#track_existing_config-84"><span class="linenos">84</span></a>
+</span><span id="track_existing_config-85"><a href="#track_existing_config-85"><span class="linenos">85</span></a>    <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</span><span id="track_existing_config-86"><a href="#track_existing_config-86"><span class="linenos">86</span></a>
+</span><span id="track_existing_config-87"><a href="#track_existing_config-87"><span class="linenos">87</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_list_file</span><span class="p">:</span>
+</span><span id="track_existing_config-88"><a href="#track_existing_config-88"><span class="linenos">88</span></a>        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cfg_list</span><span class="p">,</span> <span class="n">cfg_list_file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="track_existing_config-89"><a href="#track_existing_config-89"><span class="linenos">89</span></a>
+</span><span id="track_existing_config-90"><a href="#track_existing_config-90"><span class="linenos">90</span></a>    <span class="k">return</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -579,6 +595,11 @@
 
 <pre><code>name: a name for the config
 location: path and filename for the saved config
+</code></pre>
+
+<p>Return</p>
+
+<pre><code>bool (True == OK)
 </code></pre>
 </div>
 
@@ -595,25 +616,29 @@ location: path and filename for the saved config
 
     </div>
     <a class="headerlink" href="#create_new_config"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="create_new_config-89"><a href="#create_new_config-89"><span class="linenos"> 89</span></a><span class="k">def</span><span class="w"> </span><span class="nf">create_new_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span id="create_new_config-90"><a href="#create_new_config-90"><span class="linenos"> 90</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="create_new_config-91"><a href="#create_new_config-91"><span class="linenos"> 91</span></a><span class="sd">    Create and save a new config object ans save it to a file.</span>
-</span><span id="create_new_config-92"><a href="#create_new_config-92"><span class="linenos"> 92</span></a>
-</span><span id="create_new_config-93"><a href="#create_new_config-93"><span class="linenos"> 93</span></a><span class="sd">    Args</span>
-</span><span id="create_new_config-94"><a href="#create_new_config-94"><span class="linenos"> 94</span></a>
-</span><span id="create_new_config-95"><a href="#create_new_config-95"><span class="linenos"> 95</span></a><span class="sd">        name: a name for the config</span>
-</span><span id="create_new_config-96"><a href="#create_new_config-96"><span class="linenos"> 96</span></a><span class="sd">        location: path and filename for the saved config</span>
-</span><span id="create_new_config-97"><a href="#create_new_config-97"><span class="linenos"> 97</span></a><span class="sd">        **kwargs: key = val pairs to initialize with</span>
-</span><span id="create_new_config-98"><a href="#create_new_config-98"><span class="linenos"> 98</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="create_new_config-99"><a href="#create_new_config-99"><span class="linenos"> 99</span></a>    <span class="k">if</span> <span class="n">track_existing_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">):</span>
-</span><span id="create_new_config-100"><a href="#create_new_config-100"><span class="linenos">100</span></a>        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="create_new_config-101"><a href="#create_new_config-101"><span class="linenos">101</span></a>            <span class="n">kwarks</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="create_new_config-102"><a href="#create_new_config-102"><span class="linenos">102</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigName&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="create_new_config-103"><a href="#create_new_config-103"><span class="linenos">103</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
-</span><span id="create_new_config-104"><a href="#create_new_config-104"><span class="linenos">104</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span id="create_new_config-105"><a href="#create_new_config-105"><span class="linenos">105</span></a>        <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</span><span id="create_new_config-106"><a href="#create_new_config-106"><span class="linenos">106</span></a>
-</span><span id="create_new_config-107"><a href="#create_new_config-107"><span class="linenos">107</span></a>    <span class="k">return</span> <span class="n">cfg</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="create_new_config-93"><a href="#create_new_config-93"><span class="linenos"> 93</span></a><span class="k">def</span><span class="w"> </span><span class="nf">create_new_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="create_new_config-94"><a href="#create_new_config-94"><span class="linenos"> 94</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="create_new_config-95"><a href="#create_new_config-95"><span class="linenos"> 95</span></a><span class="sd">    Create and save a new config object ans save it to a file.</span>
+</span><span id="create_new_config-96"><a href="#create_new_config-96"><span class="linenos"> 96</span></a>
+</span><span id="create_new_config-97"><a href="#create_new_config-97"><span class="linenos"> 97</span></a><span class="sd">    Args</span>
+</span><span id="create_new_config-98"><a href="#create_new_config-98"><span class="linenos"> 98</span></a>
+</span><span id="create_new_config-99"><a href="#create_new_config-99"><span class="linenos"> 99</span></a><span class="sd">        name: a name for the config</span>
+</span><span id="create_new_config-100"><a href="#create_new_config-100"><span class="linenos">100</span></a><span class="sd">        location: path and filename for the saved config</span>
+</span><span id="create_new_config-101"><a href="#create_new_config-101"><span class="linenos">101</span></a><span class="sd">        **kwargs: key = val pairs to initialize with</span>
+</span><span id="create_new_config-102"><a href="#create_new_config-102"><span class="linenos">102</span></a>
+</span><span id="create_new_config-103"><a href="#create_new_config-103"><span class="linenos">103</span></a><span class="sd">    Rrturn</span>
+</span><span id="create_new_config-104"><a href="#create_new_config-104"><span class="linenos">104</span></a>
+</span><span id="create_new_config-105"><a href="#create_new_config-105"><span class="linenos">105</span></a><span class="sd">        config object</span>
+</span><span id="create_new_config-106"><a href="#create_new_config-106"><span class="linenos">106</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="create_new_config-107"><a href="#create_new_config-107"><span class="linenos">107</span></a>    <span class="k">if</span> <span class="n">track_existing_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">):</span>
+</span><span id="create_new_config-108"><a href="#create_new_config-108"><span class="linenos">108</span></a>        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="create_new_config-109"><a href="#create_new_config-109"><span class="linenos">109</span></a>            <span class="n">kwarks</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="create_new_config-110"><a href="#create_new_config-110"><span class="linenos">110</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigName&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="create_new_config-111"><a href="#create_new_config-111"><span class="linenos">111</span></a>        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;ConfigPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+</span><span id="create_new_config-112"><a href="#create_new_config-112"><span class="linenos">112</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="create_new_config-113"><a href="#create_new_config-113"><span class="linenos">113</span></a>        <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</span><span id="create_new_config-114"><a href="#create_new_config-114"><span class="linenos">114</span></a>
+</span><span id="create_new_config-115"><a href="#create_new_config-115"><span class="linenos">115</span></a>    <span class="k">return</span> <span class="n">cfg</span>
 </span></pre></div>
 
 
@@ -624,6 +649,11 @@ location: path and filename for the saved config
 <pre><code>name: a name for the config
 location: path and filename for the saved config
 **kwargs: key = val pairs to initialize with
+</code></pre>
+
+<p>Rrturn</p>
+
+<pre><code>config object
 </code></pre>
 </div>
 
@@ -640,33 +670,37 @@ location: path and filename for the saved config
 
     </div>
     <a class="headerlink" href="#load_config"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="load_config-110"><a href="#load_config-110"><span class="linenos">110</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-</span><span id="load_config-111"><a href="#load_config-111"><span class="linenos">111</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="load_config-112"><a href="#load_config-112"><span class="linenos">112</span></a><span class="sd">    Load an existing config from file. If the config wis created with create_new_config, it can be loaded by name, otherwise, pass a file path.</span>
-</span><span id="load_config-113"><a href="#load_config-113"><span class="linenos">113</span></a>
-</span><span id="load_config-114"><a href="#load_config-114"><span class="linenos">114</span></a><span class="sd">    Args</span>
-</span><span id="load_config-115"><a href="#load_config-115"><span class="linenos">115</span></a>
-</span><span id="load_config-116"><a href="#load_config-116"><span class="linenos">116</span></a><span class="sd">        name: name of config</span>
-</span><span id="load_config-117"><a href="#load_config-117"><span class="linenos">117</span></a><span class="sd">        location: path and file name of saved config.</span>
-</span><span id="load_config-118"><a href="#load_config-118"><span class="linenos">118</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="load_config-119"><a href="#load_config-119"><span class="linenos">119</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">location</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
-</span><span id="load_config-120"><a href="#load_config-120"><span class="linenos">120</span></a>        <span class="k">raise</span> <span class="n">Error</span><span class="p">(</span><span class="s2">&quot;You need to pass either a name or location for the config file you want to load&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="load_config-118"><a href="#load_config-118"><span class="linenos">118</span></a><span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+</span><span id="load_config-119"><a href="#load_config-119"><span class="linenos">119</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="load_config-120"><a href="#load_config-120"><span class="linenos">120</span></a><span class="sd">    Load an existing config from file. If the config wis created with create_new_config, it can be loaded by name, otherwise, pass a file path.</span>
 </span><span id="load_config-121"><a href="#load_config-121"><span class="linenos">121</span></a>
-</span><span id="load_config-122"><a href="#load_config-122"><span class="linenos">122</span></a>    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="load_config-123"><a href="#load_config-123"><span class="linenos">123</span></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="load_config-124"><a href="#load_config-124"><span class="linenos">124</span></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inf</span><span class="p">:</span>
-</span><span id="load_config-125"><a href="#load_config-125"><span class="linenos">125</span></a>                <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">inf</span><span class="p">)</span>
-</span><span id="load_config-126"><a href="#load_config-126"><span class="linenos">126</span></a>                <span class="n">location</span> <span class="o">=</span> <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-</span><span id="load_config-127"><a href="#load_config-127"><span class="linenos">127</span></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="load_config-128"><a href="#load_config-128"><span class="linenos">128</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;oops...something went wrong&quot;</span><span class="p">)</span>
-</span><span id="load_config-129"><a href="#load_config-129"><span class="linenos">129</span></a>            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-</span><span id="load_config-130"><a href="#load_config-130"><span class="linenos">130</span></a>
-</span><span id="load_config-131"><a href="#load_config-131"><span class="linenos">131</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_file</span><span class="p">:</span>
-</span><span id="load_config-132"><a href="#load_config-132"><span class="linenos">132</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+</span><span id="load_config-122"><a href="#load_config-122"><span class="linenos">122</span></a><span class="sd">    Args</span>
+</span><span id="load_config-123"><a href="#load_config-123"><span class="linenos">123</span></a>
+</span><span id="load_config-124"><a href="#load_config-124"><span class="linenos">124</span></a><span class="sd">        name: name of config</span>
+</span><span id="load_config-125"><a href="#load_config-125"><span class="linenos">125</span></a><span class="sd">        location: path and file name of saved config.</span>
+</span><span id="load_config-126"><a href="#load_config-126"><span class="linenos">126</span></a>
+</span><span id="load_config-127"><a href="#load_config-127"><span class="linenos">127</span></a><span class="sd">    Return</span>
+</span><span id="load_config-128"><a href="#load_config-128"><span class="linenos">128</span></a>
+</span><span id="load_config-129"><a href="#load_config-129"><span class="linenos">129</span></a><span class="sd">        config</span>
+</span><span id="load_config-130"><a href="#load_config-130"><span class="linenos">130</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="load_config-131"><a href="#load_config-131"><span class="linenos">131</span></a>    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">location</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+</span><span id="load_config-132"><a href="#load_config-132"><span class="linenos">132</span></a>        <span class="k">raise</span> <span class="n">Error</span><span class="p">(</span><span class="s2">&quot;You need to pass either a name or location for the config file you want to load&quot;</span><span class="p">)</span>
 </span><span id="load_config-133"><a href="#load_config-133"><span class="linenos">133</span></a>
-</span><span id="load_config-134"><a href="#load_config-134"><span class="linenos">134</span></a>    <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-</span><span id="load_config-135"><a href="#load_config-135"><span class="linenos">135</span></a>
-</span><span id="load_config-136"><a href="#load_config-136"><span class="linenos">136</span></a>    <span class="k">return</span> <span class="n">cfg</span>
+</span><span id="load_config-134"><a href="#load_config-134"><span class="linenos">134</span></a>    <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="load_config-135"><a href="#load_config-135"><span class="linenos">135</span></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="load_config-136"><a href="#load_config-136"><span class="linenos">136</span></a>            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="si">}</span><span class="s2">/cfg_list.json&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inf</span><span class="p">:</span>
+</span><span id="load_config-137"><a href="#load_config-137"><span class="linenos">137</span></a>                <span class="n">cfg_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">inf</span><span class="p">)</span>
+</span><span id="load_config-138"><a href="#load_config-138"><span class="linenos">138</span></a>                <span class="n">location</span> <span class="o">=</span> <span class="n">cfg_list</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+</span><span id="load_config-139"><a href="#load_config-139"><span class="linenos">139</span></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="load_config-140"><a href="#load_config-140"><span class="linenos">140</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;oops...something went wrong&quot;</span><span class="p">)</span>
+</span><span id="load_config-141"><a href="#load_config-141"><span class="linenos">141</span></a>            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span><span id="load_config-142"><a href="#load_config-142"><span class="linenos">142</span></a>
+</span><span id="load_config-143"><a href="#load_config-143"><span class="linenos">143</span></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg_file</span><span class="p">:</span>
+</span><span id="load_config-144"><a href="#load_config-144"><span class="linenos">144</span></a>        <span class="n">cfg</span> <span class="o">=</span> <span class="n">ValtiopaivatCorpusConfig</span><span class="p">(</span><span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">))</span>
+</span><span id="load_config-145"><a href="#load_config-145"><span class="linenos">145</span></a>
+</span><span id="load_config-146"><a href="#load_config-146"><span class="linenos">146</span></a>    <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</span><span id="load_config-147"><a href="#load_config-147"><span class="linenos">147</span></a>
+</span><span id="load_config-148"><a href="#load_config-148"><span class="linenos">148</span></a>    <span class="k">return</span> <span class="n">cfg</span>
 </span></pre></div>
 
 
@@ -676,6 +710,11 @@ location: path and filename for the saved config
 
 <pre><code>name: name of config
 location: path and file name of saved config.
+</code></pre>
+
+<p>Return</p>
+
+<pre><code>config
 </code></pre>
 </div>
 

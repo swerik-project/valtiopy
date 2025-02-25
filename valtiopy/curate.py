@@ -30,6 +30,10 @@ def convert_alto(files):
     Args
 
         files: (list) collection of alto file paths
+
+    Return
+
+        paragraphs (dict)
     """
     paragraphs = {}
     in_sync = True
@@ -50,10 +54,13 @@ def dict_to_tei(data, verbose=False):
     """
     Convert a metadata dict into a TEI XML tree
 
-    Args:
-        data (dict): dictionary containing protocol level metadata
+    Args
 
-    Returns:
+        data (dict): dictionary containing protocol level metadata
+        verbose (bool): print stuff
+
+    Return
+
         tei (lxml.etree.Element): the protocol as a TEI-formatted lxml tree root
     """
     if verbose: ptint(f"INFO: Preparing tei")
@@ -117,10 +124,10 @@ def dict_to_parlaclarin(data, tei_loc, verbose=False):
     Does not return anything, instead writes the data on disk.
 
     Args:
-        data (dict): metadata and data
 
-    Returns:
-        None
+        data (dict): metadata and data
+        tei_loc (str): path to tei
+        verbose (bool): print stuff
     """
     parlaclarin_path = f"{tei_loc}/{data['filename']}.xml"
     if verbose: print(f"INFO: preparing to write tei to {parlaclarin_path}")

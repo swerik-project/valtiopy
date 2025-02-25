@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: To cite this reposository, please use these metadata.
 title: "valtiopy: access the Finnish Parliament Corpus"
-version: v0.0.1
+version: v0.0.2
 authors:
   - family-names: Borges
     given-names: Robert
