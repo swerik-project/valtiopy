@@ -15,8 +15,10 @@ def infer_metadata(filename, verbose=False):
     """
     Heuristically infer metadata from a protocol id or filename.
 
-    Args:
+    Args
+
         filename (str): the protocols filename. Agnostic wrt. dashes and underscores. Can be relative or absolute.
+        verbose (bool): print stuff
 
     Returns a dict with keys "filename", "doc_type", "chamber", "year", and "number"
     """
