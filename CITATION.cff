@@ -1,13 +1,13 @@
 cff-version: 1.2.0
 message: To cite this reposository, please use these metadata.
 title: "valtiopy: access the Finnish Parliament Corpus"
-version: v0.0.2
+version: v0.0.3
 authors:
   - family-names: Borges
     given-names: Robert
     orcid: "https://orcid.org/0000-0002-7647-4048"
     alias: BobBorges
-date-released: 2025-02-25
+date-released: 2025-05-20
 identifiers:
   - description: Repository basename
     type: other
