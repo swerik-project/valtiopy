@@ -18,18 +18,21 @@ class ValtiopaivatCorpusConfig:
         self.ValtiopaivatRecordsTEILocation = None
         self.ValtiopaivatRecordsALTOLocation = None
         self.ValtiopaivatRecordsPDFLocation = None
+        self.ValtiopaivatRecordsLOMap = None
         self.ValtiopaivatHandlingarTEILocation = None
         self.ValtiopaivatHandlingarALTOLocation = None
         self.ValtiopaivatHandlingarPDFLocation = None
-        self.ValtiopaivatRegisterTEILocation = None
-        self.ValtiopaivatRegisterALTOLocation = None
-        self.ValtiopaivatRegisterPDFLocation = None
+        self.ValtiopaivatHandlingarLOMap = None
+        self.ValtiopaivatRegistersTEILocation = None
+        self.ValtiopaivatRegistersALTOLocation = None
+        self.ValtiopaivatRegistersPDFLocation = None
+        self.ValtiopaivatRegistersLOMap = None
 
         for k,v in kwargs.items():
             if hasattr(self, k):
                 setattr(self, k, v)
             else:
-                warnings.warm(f"The property -- {k} -- from the config file is not a valid property. Ignoring")
+                warnings.warn(f"The property -- {k} -- from the config file is not a valid property. Ignoring")
 
     def write(self):
         """
@@ -56,7 +59,7 @@ class ValtiopaivatCorpusConfig:
 
 
 
-def track_existing_config(name = None, location = None):
+def track_existing_config(name = None, location = None, overwrite_existing=False):
     """
     Assign a name to an existing config file.
 
@@ -79,7 +82,8 @@ def track_existing_config(name = None, location = None):
         cfg_list = {}
 
     if name in cfg_list:
-        raise Exception(f"The name -- {name} -- already exists as a named config.")
+        if overwrite_existing == False:
+            raise Exception(f"The name -- {name} -- already exists as a named config. (pass overwrite_existing=True to override this error)")
 
     cfg_list[name] = os.path.abspath(location)
 
