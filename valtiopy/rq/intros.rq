@@ -1,0 +1,68 @@
+(
+(
+  (B|b)iskop(en)?
+  |
+  (D|d)oktor
+  |
+  (D|d)omprosten
+  |
+  ((F|f)ri)(H|h)err(e)?
+  |
+  (F|f)ri(h|b)?(,|\.)?
+  |
+  (g|G)refve
+  |
+  (H|h)err
+  |
+  (H|h)r(\.)?
+  |
+  (K|k)yrkoherden
+  |
+  (L|l)andtdagsmannen
+  |
+  (L|l)ektor
+  |
+  (O|Ö|o|ö)fverlärar(en)?
+  |
+  (P|p)rofessor(n)?
+  |
+  (P|p)rosten
+  |
+  (R|r)ektor
+  |
+  (S|s)tatsrådet
+  |
+  ((V|v)ice\s?)?(P|p)astor(n)?
+){s<=1}
+\s
+(
+  [A-Z]{1}\.\s
+  (
+  [A-Z]{1}\.\s
+  )?
+)?
+(
+  (
+    (
+      (
+        von
+        |
+        de\sla
+        |
+        af
+      )
+      \s
+    )?
+    [^\s,:;\.]+
+  )
+  (
+    ,\s
+    (
+      [A-Z]{1}\.\s
+      (
+        [A-Z]{1}\.(\s)?
+      )?
+    )
+  )?
+)
+)
